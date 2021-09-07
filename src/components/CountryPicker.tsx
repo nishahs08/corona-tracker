@@ -2,6 +2,9 @@ import { FormControl, NativeSelect } from '@material-ui/core';
 import React,{useState,useEffect} from 'react';
 import {useCountriesApi} from '../hooks';
 import axios from "axios";
+interface CountryPickerProps{
+    
+}
  export const CountryPicker =()=>{
     const countries = useCountriesApi();
     const [data, setData] = useState([]);
