@@ -1,12 +1,14 @@
-import { Container, Grid } from "@material-ui/core";
+import { Container, Grid, Typography,Box } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Confirmed } from "./components/Confirmed";
 import { Deaths } from "./components/Deaths";
 import { Recovered } from "./components/Recovered";
 import { useReportApi, useDailyData } from "./hooks";
-import { Line } from "react-chartjs-2";
-import {CountryPicker} from './components/CountryPicker'
+import { Line ,Bar} from "react-chartjs-2";
+import {CountryPicker} from './components/CountryPicker';
+import {getData} from './service';
+
 type ReportedData = {
   confirmed: {
     value: number;
@@ -20,18 +22,16 @@ type ReportedData = {
     value: number;
     detail: string;
   };
+  lastUpdate:string
 };
+
 function App() {
-  const data = useReportApi();
+  const [country,setCountry]=useState('');
+  const data = useReportApi(country);
   const dailyData = useDailyData();
   console.log("dailyData", dailyData);
-  if (data) {
-    const updatedData = {
-      confirmed: data.confirmed.value,
-      deaths: data.deaths.value,
-      recovered: data.recovered.value,
-    };
-  }
+
+
 
   const lineChart = dailyData?.length ? (
     <Line
@@ -59,20 +59,40 @@ function App() {
     ></Line>
   ) : null;
 
+  const barChart=(
+    data?.confirmed ? (
+      <Bar data={{
+        labels:['Infected','Recovred','Deaths'],
+        datasets:[{
+          label:'People',
+          backgroundColor:[
+            'rgba(0,0,255,0.5)',
+            'rgba(0,255,0,0.5)',
+            'rgba(255,0,0,0.5)'
+          ],
+          data:[data.confirmed.value,data.recovered.value,data.deaths.value]
+        }]
+      }}></Bar>
+    ) : null
+  )
+  const onChange = (value:string)=>{
+      setCountry(value)
+  }
+
   return (
-    <Container maxWidth="lg">
-      <Grid container justifyContent="space-around">
-        <Confirmed confirmed={data?.confirmed.value} />
-        <Deaths deaths={data?.deaths.value} />
-        <Recovered recovered={data?.recovered.value} />
+    <Container maxWidth="lg" >
+      <Typography variant='h2'>COVID</Typography>
+      <Grid container  justifyContent="space-around" style={{padding:'50px'}}>
+        <Confirmed confirmed={data?.confirmed.value} lastUpdated={data?.lastUpdate ? data?.lastUpdate : new Date().toString()}/>
+        <Deaths deaths={data?.deaths.value} lastUpdated={data?.lastUpdate ? data?.lastUpdate : new Date().toString()}/>
+        <Recovered recovered={data?.recovered.value} lastUpdated={data?.lastUpdate ? data?.lastUpdate : new Date().toString()}/>
       </Grid>
-      <div>
-      <CountryPicker></CountryPicker>
-      </div>
-      {lineChart}
-  
-  
-      
+     
+      <CountryPicker onChange={onChange}/>
+    <Box style={{width:'80%'}}>
+    {country ? barChart : lineChart} 
+    </Box>
+   
     </Container>
   );
 }
