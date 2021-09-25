@@ -1,5 +1,4 @@
-import { Grid, Card, Typography, Box } from '@material-ui/core';
-import CountUp from 'react-countup';
+
 import { Information } from './Information';
 interface ConfirmedProps {
 	confirmed: number | undefined;

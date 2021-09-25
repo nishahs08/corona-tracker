@@ -8,7 +8,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
 	const countries = useCountriesApi();
 
 	return (
-		<FormControl>
+		<FormControl style={{margin:'15px'}}>
 			<NativeSelect defaultValue='' onChange={(e: any) => props.onChange(e.target.value)}>
 				<option value=''>Global</option>
 				{countries.length

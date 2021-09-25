@@ -6,5 +6,5 @@ interface DeathsProps {
 	lastUpdated: string;
 }
 export const Deaths: React.FC<DeathsProps> = ({ deaths, lastUpdated }) => {
-	return <Information type='confirmed' numbers={deaths} lastUpdated={lastUpdated} />;
+	return <Information type='deaths' numbers={deaths} lastUpdated={lastUpdated} />;
 };

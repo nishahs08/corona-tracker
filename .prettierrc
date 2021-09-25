@@ -1,7 +1,9 @@
 {
 	"tabWidth": 4,
 	"useTabs": true,
-	"singleQuote": true,
 	"jsxSingleQuote": true,
-	"printWidth": 120
+	"singleQuote": true,
+	"printWidth": 100,
+	"importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
+	"importOrderSeparation": true
 }
