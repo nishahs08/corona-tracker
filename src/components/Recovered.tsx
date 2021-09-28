@@ -1,21 +1,12 @@
-import { Grid, Card, Typography } from "@material-ui/core";
-import CountUp from "react-countup";
+
+import {Information} from './Information'
 interface RecoveredProps {
-  recovered: number | undefined;
+	recovered: number | undefined;
+	lastUpdated: string;
 }
-export const Recovered = (props: RecoveredProps) => {
-  return (
-    <Grid item component={Card}  style={{width: "250px",height:'250px',borderBottom:'10px solid green' }}
-    >
-      <Typography>Infected</Typography>
-      <CountUp
-        start={0}
-        end={props.recovered ? props.recovered : 0}
-        duration={2.75}
-        separator=" "
-      ></CountUp>
-      <Typography> {new Date().toString()}</Typography>
-      <Typography></Typography>
-    </Grid>
-  );
+export const Recovered :React.FC<RecoveredProps>= ({recovered,lastUpdated}) => {
+	return (
+		<Information type='recovered' numbers={recovered} lastUpdated={lastUpdated}/>
+	);
 };
+

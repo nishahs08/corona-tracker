@@ -14,22 +14,27 @@ type ReportedData = {
     value: number;
     detail: string;
   };
+  lastUpdate:string
 };
-export const useReportApi = () => {
+export const useReportApi = (country:string|undefined) => {
   const [data, setData] = useState<ReportedData>();
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get("https://covid19.mathdro.id/api");
+          const url = country ? `https://covid19.mathdro.id/api/countries/${country}`:'https://covid19.mathdro.id/api/';
+        const res = await axios.get(url);
         setData(res.data);
+        console.log('country',country,res.data)
       } catch {
         console.log("something went wrong");
       }
     };
     getData();
-  }, []);
+  }, [country]);
   return data;
 };
+
+
 
 export const useDailyData = () => {
   const [data, setData] = useState<Object[]>();

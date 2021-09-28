@@ -1,24 +1,11 @@
-import { Grid, Card, Typography } from "@material-ui/core";
-import CountUp from "react-countup";
+
+import { Information } from './Information';
 interface ConfirmedProps {
-  confirmed: number | undefined;
+	confirmed: number | undefined;
+	lastUpdated: string;
 }
-export const Confirmed = (props: ConfirmedProps) => {
-  return (
-    <Grid
-      item
-      component={Card}
-      style={{width: "250px",height:'250px',borderBottom:'10px solid green' }}
-    >
-      <Typography>Infected</Typography>
-      <CountUp
-        start={0}
-        end={props.confirmed ? props.confirmed : 0}
-        duration={2.75}
-        separator=" "
-      ></CountUp>
-      <Typography> {new Date().toString()}</Typography>
-      <Typography></Typography>
-    </Grid>
-  );
+export const Confirmed :React.FC<ConfirmedProps> = ({confirmed,lastUpdated}) => {
+	return (
+		<Information type='confirmed' numbers={confirmed} lastUpdated={lastUpdated}/>
+	);
 };
